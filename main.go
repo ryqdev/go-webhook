@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os/exec"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,15 +16,21 @@ func main() {
 		})
 	})
 	r.POST("/webhook", func(c *gin.Context) {
-		foo()
+		unreal()
 		c.JSON(http.StatusOK, gin.H{
-			"message": "webhook",
+			"message": "[OK]",
 		})
 
 	})
 	r.Run(":8181") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 
-func foo() {
-	fmt.Println(foo)
+func unreal() {
+	cmd := exec.Command("make", "build")
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println("Error executing 'make build':", err)
+		return
+	}
+	fmt.Println("Build successful")
 }
