@@ -15,11 +15,15 @@ func main() {
 		})
 	})
 	r.POST("/webhook", func(c *gin.Context) {
-		fmt.Printf("%s\n", "At least I got here")
+		foo()
 		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
+			"message": "webhook",
 		})
 
 	})
 	r.Run(":8181") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+}
+
+func foo() {
+	fmt.Println(foo)
 }
