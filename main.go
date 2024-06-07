@@ -8,10 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type WebhookBody struct {
-	Command string `json:"command" binding:"required"`
-}
-
+//	type WebhookBody struct {
+//		Command string `json:"command" binding:"required"`
+//	}
 func main() {
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
@@ -20,10 +19,10 @@ func main() {
 		})
 	})
 	r.POST("/webhook", func(c *gin.Context) {
-		var cmd WebhookBody
-		c.BindJSON(&cmd)
-		fmt.Println(cmd.Command)
-		webhook(cmd.Command)
+		//var cmd WebhookBody
+		//c.BindJSON(&cmd)
+		//fmt.Println(cmd.Command)
+		webhook()
 		c.JSON(http.StatusOK, gin.H{
 			"message": "[OK]",
 		})
@@ -32,8 +31,8 @@ func main() {
 	r.Run("0.0.0.0:8181")
 }
 
-func webhook(makeCmd string) {
-	cmd := exec.Command("make", makeCmd)
+func webhook() {
+	cmd := exec.Command("make", "mdbook")
 	err := cmd.Run()
 	if err != nil {
 		fmt.Println("Error executing 'make build':", err)
