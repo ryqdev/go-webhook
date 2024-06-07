@@ -29,7 +29,7 @@ func main() {
 		})
 
 	})
-	r.Run(":8181")
+	r.Run("0.0.0.0:8181")
 }
 
 func webhook(makeCmd string) {
